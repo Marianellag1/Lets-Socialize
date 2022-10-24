@@ -1,21 +1,20 @@
 {
   "name": "lets-socialize",
-  "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
+  "version": "1.0.1",
+  "description": "Mongoose back-end project - Develop",
+  "main": "index.js",
+  "license": "MIT",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node index",
+    "dev": "nodemon index",
+    "seed": "node utils/seed",
+    "heroku-postbuild": "node utils/seed.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Marianellag1/Lets-Socialize.git"
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^6.0.13"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Marianellag1/Lets-Socialize/issues"
-  },
-  "homepage": "https://github.com/Marianellag1/Lets-Socialize#readme"
+  "devDependencies": {
+    "nodemon": "^2.0.9"
+  }
 }
