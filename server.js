@@ -9,7 +9,7 @@ const app = express();
 
 // Note from activities : not necessary for the Express server to function. This just helps indicate what activity's server is running in the terminal.
 const activity = cwd.includes('Challenge-18')
-  ? cwd.split('/Challenge-18/')[1]
+  ? cwd.split('Challenge-18')[1]
   : cwd;
 
 app.use(express.urlencoded({ extended: true }));
