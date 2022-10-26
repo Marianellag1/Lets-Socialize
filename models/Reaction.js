@@ -1,40 +1,37 @@
-// const { Schema, model } = require('mongoose');
+const { Schema, Types } = require('mongoose');
 
-// module.exports = 
 
 const reactionSchema = new Schema(
-    // **Reaction** (SCHEMA ONLY)
-    // * `reactionId`
-    //   * Use Mongoose's ObjectId data type
-    //   * Default value is set to a new ObjectId
+
     {
-        // * `reactionBody`
+        reactionId: {
+            type: Schema.Types.ObjectId,
+            default: () => new Types.ObjectId(),
+        },
         reactionBody: {
-            //   * String
             type: String,
-            //   * Required
             required: true,
-            //   * 280 character maximum
             maxlength: 280,
         },
-        // * `username`
+
         username: {
-            //   * String
             type: String,
-            //   * Required
-            requiered: true,
+            required: true,
         },
-        // * `createdAt`
         createdAt: {
-            //   * Date
             type: Date,
-            //   * Set default value to the current timestamp
-            //   * Use a getter method to format the timestamp on query
-        }
+            default: Date.now,
+        },
+    },
+    {
+        toJSON: {
+            getters: true,
+        },
+        id: false,
     }
 )
 
-
+module.exports = reactionSchema;
 
 
 // **Schema Settings**:
