@@ -21,7 +21,7 @@ module.exports = {
   // * `POST` to create a new thought (don't forget to push the created thought's `_id` to the associated user's `thoughts` array field)
   createThought(req, res) {
     Thought.create(req.body)
-      .then(({_id}) => {
+      .then(({ _id }) => {
         return User.findOneAndUpdate(
           { _id: req.body.userId },
           { $push: { thoughts: _id } },
@@ -65,38 +65,63 @@ module.exports = {
         res.status(500).json(err);
       });
   },
+  // * `DELETE` to remove a thought by its `_id`   
   deleteThought(req, res) {
-    Thought.findOneAndRemove({ _id: req.params.thoughtId })
+    Thought.findOneAndDelete({ _id: req.params.thoughtId })
       .then((thought) =>
         !thought
-          ? res.status(404).json({ message: 'No such thought exists' })
-          : Course.findOneAndUpdate(
-            { thoughts: req.params.thoughtId },
-            { $pull: { students: req.params.thoughtId } },
-            { new: true }
-          )
+          ? res.status(404).json({ message: 'No course with that ID' })
+          : Thought.deleteMany({ _id: { $in: Thought.reactions } })
       )
+      .then(() => res.json({ message: 'User and thought(s) deleted!' }))
+      .catch((err) => res.status(500).json(err));
+  },
+  // * `POST` to create a reaction stored in a single thought's `reactions` array field
+  createReaction(req, res) {
+    Thought.findOneAndUpdate(
+        { _id: req.body.thoughtId },
+        { $push: { reactions: body } },
+        { new: true }
+        )
+      .select('-__v')
+      .populate({path: 'reactions', select: '-__v'})
       .then((user) =>
         !user
           ? res.status(404).json({
-            message: 'Friend deleted, but no thought found',
+            message: 'Application created, but found no user with that ID',
           })
-          : res.json({ message: 'Friend successfully deleted' })
+          : res.json('Created the application 🎉')
       )
       .catch((err) => {
         console.log(err);
         res.status(500).json(err);
       });
   },
+
+  // * `DELETE` to pull and remove a reaction by the reaction's `reactionId` value
+  // deleteThought(req, res) {
+  //   Thought.findOneAndRemove({ _id: req.params.thoughtId })
+  //     .then((thought) =>
+  //       !thought
+  //         ? res.status(404).json({ message: 'No such thought exists' })
+  //         : Thought.findOneAndUpdate(
+  //           { thoughts: req.params.thoughtId },
+  //           { $pull: { students: req.params.thoughtId } },
+  //           { new: true }
+  //         )
+  //     )
+  //     .then((user) =>
+  //       !user
+  //         ? res.status(404).json({
+  //           message: 'Friend deleted, but no thought found',
+  //         })
+  //         : res.json({ message: 'thought successfully deleted' })
+  //     )
+  //     .catch((err) => {
+  //       console.log(err);
+  //       res.status(500).json(err);
+  //     });
+  // },
 }
 
-
-
-
-
-// * `DELETE` to remove a thought by its `_id`
-
 // _____________________________________________________________________
-// * `POST` to create a reaction stored in a single thought's `reactions` array field
-
-// * `DELETE` to pull and remove a reaction by the reaction's `reactionId` value

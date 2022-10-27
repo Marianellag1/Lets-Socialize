@@ -63,17 +63,36 @@ module.exports = {
           .then(() => res.json({ message: 'User and thought(s) deleted!' }))
           .catch((err) => res.status(500).json(err));
       },
+      // * `POST` to add a new friend to a user's friend list
+      addFriend(req, res) {
+        User.findOneAndUpdate(
+          { _id: req.params.friendId },
+          { $addToSet: { friends: req.body } },
+          { runValidators: true, new: true }
+        )
+          .then((dbUserData) =>
+            !dbUserData
+              ? res
+                .status(404)
+                .json({ message: 'No user found with that ID :(' })
+              : res.json(dbUserData)
+          )
+          .catch((err) => res.status(500).json(err));
+        },
+        // * `DELETE` to remove a friend from a user's friend list
+      // removeAssignment(req, res) {
+      //   Student.findOneAndUpdate(
+      //     { _id: req.params.studentId },
+      //     { $pull: { assignment: { assignmentId: req.params.assignmentId } } },
+      //     { runValidators: true, new: true }
+      //   )
+      //     .then((student) =>
+      //       !student
+      //         ? res
+      //           .status(404)
+      //           .json({ message: 'No student found with that ID :(' })
+      //         : res.json(student)
+      //     )
+      //     .catch((err) => res.status(500).json(err));
+      // },
 }
-
-
-
-
-
-
-// **BONUS**: Remove a user's associated thoughts when deleted.
-
-//________________________________________________________
-
-// * `POST` to add a new friend to a user's friend list
-
-// * `DELETE` to remove a friend from a user's friend list
