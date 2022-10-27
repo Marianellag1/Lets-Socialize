@@ -1,4 +1,5 @@
 # **Lets Socialize**
+Video Link: https://app.castify.com/view/447ea6d7-544a-48c3-aa15-2f26ec21fa64
 
 [![Licence](http://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -16,6 +17,7 @@
 
 
 ---
+![Screenshot 2022-10-26 224619](https://user-images.githubusercontent.com/110939445/198186572-f8a3b86a-b21a-43e5-9190-fc5e5f43fb1a.png)
 
 ## **Description of the Project**
 This NoSql social media startup project is designed for users for multiple users to create a sort of account with just their username and email. The user will then be able to put thoughts, receive reactions and even add friends.
