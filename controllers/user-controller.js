@@ -66,16 +66,16 @@ module.exports = {
       // * `POST` to add a new friend to a user's friend list
       addFriend(req, res) {
         User.findOneAndUpdate(
-          { _id: req.params.friendId },
+          { _id: req.params.usersId },
           { $addToSet: { friends: req.body } },
           { runValidators: true, new: true }
-        )
-          .then((dbUserData) =>
-            !dbUserData
-              ? res
-                .status(404)
-                .json({ message: 'No user found with that ID :(' })
-              : res.json(dbUserData)
+          )
+          .then((user) =>
+          !user
+          ? res
+          .status(404)
+          .json({ message: 'No user found with that ID :(' })
+          : res.json(user)
           )
           .catch((err) => res.status(500).json(err));
         },
